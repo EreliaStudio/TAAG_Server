@@ -1,11 +1,5 @@
 #include <sparkle.hpp>
 
-#include "network_override.hpp"
-
-#include "context.hpp"
-
-#include "network_widget.hpp"
-
 #include "main_widget.hpp"
 
 int main()

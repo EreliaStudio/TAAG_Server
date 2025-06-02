@@ -1,4 +1,4 @@
-#include "network_widget.hpp"
+#include "network/network_widget.hpp"
 
 void ServerWidget::_onUpdateEvent(spk::UpdateEvent& p_event)
 {

@@ -1,4 +1,4 @@
-#include "world.hpp"
+#include "structure/world.hpp"
 
 void Tilemap::_onChunkGeneration(const ChunkCoordinate& p_coordinates, spk::SafePointer<Chunk> p_chunk)
 {

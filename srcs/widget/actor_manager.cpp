@@ -1,10 +1,10 @@
-#include "actor_manager.hpp"
+#include "widget/actor_manager.hpp"
 
-#include "context.hpp"
+#include "structure/context.hpp"
 
 void ActorManager::_parseActorRequest(const spk::Server::ClientID& p_clientID, const spk::Message& p_message)
 {
-	spk::Message awnser = spk::Message(static_cast<int>(MessageType::ActorAwnser));
+	spk::Message awnser = spk::Message(static_cast<int>(MessageType::ActorData));
 
 	while (p_message.empty() == false)
 	{
@@ -15,6 +15,7 @@ void ActorManager::_parseActorRequest(const spk::Server::ClientID& p_clientID, c
 			spk::SafePointer<Actor> actor = Context::instance()->actorMap.actor(actorID);
 			
 			awnser << actorID;
+			
 			actor->serialize(awnser);
 		}
 	}
@@ -29,6 +30,7 @@ void ActorManager::_pushActorList()
 	for (const auto& [actorID, actor] : Context::instance()->actorMap.actors())
 	{
 		message << actorID;
+
 		actor->serialize(message);
 	}
 
@@ -37,7 +39,14 @@ void ActorManager::_pushActorList()
 
 void ActorManager::_onUpdateEvent(spk::UpdateEvent& p_event)
 {
+	if (_pushActorTimer.state() == spk::Timer::State::Running)
+	{
+		return ;
+	}
+
+	_pushActorList();
 	
+	_pushActorTimer.start();
 }
 
 ActorManager::ActorManager(const std::wstring& p_name, spk::SafePointer<spk::Widget> p_parent) :

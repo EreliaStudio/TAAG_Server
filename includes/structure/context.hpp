@@ -1,9 +1,11 @@
 #pragma once
 
-#include "network_override.hpp"
+#include <sparkle.hpp>
 
-#include "world.hpp"
-#include "actor_map.hpp"
+#include "network/network_override.hpp"
+
+#include "structure/world.hpp"
+#include "structure/actor_map.hpp"
 
 struct Context : public spk::Singleton<Context>
 {

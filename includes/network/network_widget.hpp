@@ -2,9 +2,9 @@
 
 #include <sparkle.hpp>
 
-#include "network_override.hpp"
+#include "structure/context.hpp"
 
-#include "context.hpp"
+#include "network/network_override.hpp"
 
 class ServerWidget : public spk::Widget
 {

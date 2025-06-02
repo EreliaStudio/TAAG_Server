@@ -2,7 +2,7 @@
 
 #include <sparkle.hpp>
 
-#include "serializable_object.hpp"
+#include "network/serializable_object.hpp"
 
 struct Node
 {
@@ -39,9 +39,11 @@ public:
 
 	void serialize(spk::Message& p_message) const override;
 	void deserialize(spk::Message& p_message) override;
+	static void skip(spk::Message& p_message);
 
 	void bindActor(spk::SafePointer<Actor> p_actor);
 	void unbindActor(spk::SafePointer<Actor> p_actor);
+	const std::set<spk::SafePointer<Actor>>& bindedActors() const;
 };
 
 class Tilemap : public spk::ITilemap<Chunk>

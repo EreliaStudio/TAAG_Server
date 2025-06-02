@@ -5,14 +5,15 @@
 enum class MessageType
 {
 	ChunkRequest = 0,
-	ChunkAwnser = 1,
-	ChunkUpdate = 2,
-	ActorRequest = 3,
-	ActorAwnser = 4,
-	ActorUpdate = 5,
-	ActorList = 6,
-	PlayerIDAssignation = 7
+	ChunkData = 1,
+	ActorRequest = 2,
+	ActorData = 3,
+	ActorList = 4,
+	PlayerIDAssignation = 5
 };
+
+std::string toString(MessageType p_type);
+std::wstring toWString(MessageType p_type);
 
 class Server : public spk::Server
 {

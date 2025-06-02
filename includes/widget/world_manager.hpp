@@ -2,12 +2,10 @@
 
 #include <sparkle.hpp>
 
-#include "network_override.hpp"
-
 class WorldManager : public spk::Widget
 {
 private:
-	void _sendChunk(const Server::ClientID& p_clientID, const spk::Message& p_message);
+	void _sendChunk(const spk::Server::ClientID& p_clientID, const spk::Message& p_message);
 
 	void _loadNodeMap();
 

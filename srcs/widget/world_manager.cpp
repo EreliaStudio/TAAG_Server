@@ -1,10 +1,10 @@
-#include "world_manager.hpp"
+#include "widget/world_manager.hpp"
 
-#include "context.hpp"
+#include "structure/context.hpp"
 
-void WorldManager::_sendChunk(const Server::ClientID& p_clientID, const spk::Message& p_message)
+void WorldManager::_sendChunk(const spk::Server::ClientID& p_clientID, const spk::Message& p_message)
 {
-	spk::Message awnser(static_cast<spk::Message::Header::Type>(MessageType::ChunkAwnser));
+	spk::Message awnser(static_cast<spk::Message::Header::Type>(MessageType::ChunkData));
 
 	while (p_message.empty() == false)
 	{
