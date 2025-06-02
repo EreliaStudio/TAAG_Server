@@ -2,20 +2,15 @@
 
 #include "context.hpp"
 
-void WorldManager::_onUpdateEvent(spk::UpdateEvent& p_event)
-{
-	// Handle update events for the world manager here
-}
-
 void WorldManager::_sendChunk(const Server::ClientID& p_clientID, const spk::Message& p_message)
 {
 	spk::Message awnser(static_cast<spk::Message::Header::Type>(MessageType::ChunkAwnser));
 
 	while (p_message.empty() == false)
 	{
-		spk::SafePointer<Chunk> chunk = Context::instance()->tilemap.requestChunk(p_chunkPosition);
+		spk::Vector2Int requestedChunkPosition = p_message.get<spk::Vector2Int>();
 
-		awnser << chunk->contentArray();
+		Context::instance()->tilemap.requestChunk(requestedChunkPosition)->serialize(awnser);
 	}
 
 	Context::instance()->server.sendTo(p_clientID, awnser);

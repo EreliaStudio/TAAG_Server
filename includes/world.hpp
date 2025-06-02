@@ -2,6 +2,8 @@
 
 #include <sparkle.hpp>
 
+#include "serializable_object.hpp"
+
 struct Node
 {
 	bool isObstacle = false;
@@ -27,13 +29,16 @@ public:
 
 class Actor;
 
-class Chunk : public spk::IChunk<NodeMap::ID, 16, 16, 3>
+class Chunk : public spk::IChunk<NodeMap::ID, 16, 16, 3>, public SerializableObject
 {
 private:
 	std::set<spk::SafePointer<Actor>> _bindedActors;
 
 public:
 	Chunk();
+
+	void serialize(spk::Message& p_message) const override;
+	void deserialize(spk::Message& p_message) override;
 
 	void bindActor(spk::SafePointer<Actor> p_actor);
 	void unbindActor(spk::SafePointer<Actor> p_actor);
@@ -43,8 +48,6 @@ class Tilemap : public spk::ITilemap<Chunk>
 {
 private:
 	spk::Perlin _perlinGenerator;
-
-	void _generateChunk(spk::SafePointer<Chunk>& p_chunk);
 
 	void _onChunkGeneration(const ChunkCoordinate& p_coordinates, spk::SafePointer<Chunk> p_chunk);
 

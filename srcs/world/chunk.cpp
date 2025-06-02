@@ -7,6 +7,16 @@ Chunk::Chunk() : spk::IChunk<char, 16, 16, 3>()
 
 }
 
+void Chunk::serialize(spk::Message& p_message) const
+{
+	p_message << contentArray();
+}
+
+void Chunk::deserialize(spk::Message& p_message)
+{
+	p_message >> contentArray();
+}
+
 void Chunk::bindActor(spk::SafePointer<Actor> p_actor)
 {
 	if (p_actor->bindedChunk() != nullptr)

@@ -4,22 +4,40 @@
 
 void ActorManager::_parseActorRequest(const spk::Server::ClientID& p_clientID, const spk::Message& p_message)
 {
+	spk::Message awnser = spk::Message(static_cast<int>(MessageType::ActorAwnser));
 
-}
+	while (p_message.empty() == false)
+	{
+		ActorMap::ActorID actorID = p_message.get<ActorMap::ActorID>();
 
-void ActorManager::_assignPlayerID(const spk::Server::ClientID& p_clientID)
-{
+		if (Context::instance()->actorMap.contains(actorID))
+		{
+			spk::SafePointer<Actor> actor = Context::instance()->actorMap.actor(actorID);
+			
+			awnser << actorID;
+			actor->serialize(awnser);
+		}
+	}
 
-}
-
-void ActorManager::_unassignPlayerID(const spk::Server::ClientID& p_clientID)
-{
-	
+	Context::instance()->server.sendTo(p_clientID, awnser);
 }
 
 void ActorManager::_pushActorList()
 {
+	spk::Message message(static_cast<spk::Message::Header::Type>(MessageType::ActorList));
 
+	for (const auto& [actorID, actor] : Context::instance()->actorMap.actors())
+	{
+		message << actorID;
+		actor->serialize(message);
+	}
+
+	Context::instance()->server.sendToAll(message);
+}
+
+void ActorManager::_onUpdateEvent(spk::UpdateEvent& p_event)
+{
+	
 }
 
 ActorManager::ActorManager(const std::wstring& p_name, spk::SafePointer<spk::Widget> p_parent) :
@@ -27,13 +45,5 @@ ActorManager::ActorManager(const std::wstring& p_name, spk::SafePointer<spk::Wid
 {
 	Context::instance()->server.subscribe(MessageType::ActorRequest, [this](const spk::Server::ClientID& p_clientID, const spk::Message& p_message) {
 		_parseActorRequest(p_clientID, p_message);
-	}).relinquish();
-
-	Context::instance()->server.addOnConnectionCallback([this](spk::Server::ClientID p_clientID) {
-		_assignPlayerID(p_clientID);
-	}).relinquish();
-
-	Context::instance()->server.addOnDisconnectionCallback([this](spk::Server::ClientID p_clientID) {
-		spk::cout << "Client ID [" << p_clientID << "] disconnected." << std::endl;
 	}).relinquish();
 }

@@ -10,7 +10,8 @@ enum class MessageType
 	ActorRequest = 3,
 	ActorAwnser = 4,
 	ActorUpdate = 5,
-	PlayerIDAssignation = 6
+	ActorList = 6,
+	PlayerIDAssignation = 7
 };
 
 class Server : public spk::Server
