@@ -4,7 +4,6 @@
 
 void PlayerManager::_assignPlayerID(const spk::Server::ClientID& p_clientID)
 {
-
 	std::unique_ptr<Actor> newActor = std::make_unique<Actor>();
 
 	newActor->setPosition(spk::Vector2(0, 0)); // Set initial position
