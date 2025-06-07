@@ -9,12 +9,12 @@ Chunk::Chunk() : spk::IChunk<char, 16, 16, 3>()
 
 void Chunk::serialize(spk::Message& p_message) const
 {
-	p_message << contentArray();
+	p_message.push(content(), contentByteSize());
 }
 
-void Chunk::deserialize(spk::Message& p_message)
+void Chunk::deserialize(const spk::Message& p_message)
 {
-	p_message >> contentArray();
+	p_message.pull(content(), contentByteSize());
 }
 
 void Chunk::bindActor(spk::SafePointer<Actor> p_actor)

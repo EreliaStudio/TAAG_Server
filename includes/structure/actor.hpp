@@ -16,15 +16,17 @@ private:
 	spk::SafePointer<Chunk> _bindedChunk;
 
 public:
+	void update();
+
 	void setPosition(const spk::Vector2& p_position);
-	spk::Vector2 position() const;
+	const spk::Vector2& position() const;
 	void setRotation(float p_rotation);
-	float rotation() const;
+	const float& rotation() const;
 	void setScale(const spk::Vector2& p_scale);
-	spk::Vector2 scale() const;
+	const spk::Vector2& scale() const;
 
 	void serialize(spk::Message& p_message) const override;
-	void deserialize(spk::Message& p_message) override;
+	void deserialize(const spk::Message& p_message) override;
 	static void skip(spk::Message& p_message);
 
 	spk::SafePointer<Chunk> bindedChunk() const;

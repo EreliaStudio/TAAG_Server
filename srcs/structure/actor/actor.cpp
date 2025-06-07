@@ -1,11 +1,16 @@
 #include "structure/actor.hpp"
 
+void Actor::update()
+{
+
+}
+
 void Actor::setPosition(const spk::Vector2& p_position)
 {
 	_position = p_position;
 }
 
-spk::Vector2 Actor::position() const
+const spk::Vector2& Actor::position() const
 {
 	return _position;
 }
@@ -15,7 +20,7 @@ void Actor::setRotation(float p_rotation)
 	_rotation = p_rotation;
 }
 
-float Actor::rotation() const
+const float& Actor::rotation() const
 {
 	return _rotation;
 }
@@ -25,7 +30,7 @@ void Actor::setScale(const spk::Vector2& p_scale)
 	_scale = p_scale;
 }
 
-spk::Vector2 Actor::scale() const
+const spk::Vector2& Actor::scale() const
 {
 	return _scale;
 }
@@ -37,7 +42,7 @@ void Actor::serialize(spk::Message& p_message) const
 	p_message << _scale;
 }
 
-void Actor::deserialize(spk::Message& p_message)
+void Actor::deserialize(const spk::Message& p_message)
 {
 	p_message >> _position;
 	p_message >> _rotation;

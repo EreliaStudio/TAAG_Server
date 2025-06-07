@@ -6,13 +6,11 @@ void PlayerManager::_assignPlayerID(const spk::Server::ClientID& p_clientID)
 {
 	std::unique_ptr<Actor> newActor = std::make_unique<Actor>();
 
-	newActor->setPosition(spk::Vector2(0, 0)); // Set initial position
+	newActor->setPosition(spk::Vector2(4, 4)); // Set initial position
 	newActor->setRotation(0.0f); // Set initial rotation
 	newActor->setScale(spk::Vector2(1, 1)); // Set initial scale
 
 	ActorMap::ActorID playerID = Context::instance()->actorMap.addActor(std::move(newActor));
-
-	spk::cout << "Assigning player ID for client: " << p_clientID << " -> " << playerID << std::endl;
 
 	spk::Message message = spk::Message(static_cast<spk::Message::Header::Type>(MessageType::PlayerIDAssignation));
 

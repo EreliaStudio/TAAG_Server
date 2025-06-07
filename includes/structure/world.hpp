@@ -6,7 +6,25 @@
 
 struct Node
 {
-	bool isObstacle = false;
+    enum class Flag : std::uint16_t
+    {
+        None         = 0,
+        EastBlocked  = 1 << 0,
+        WestBlocked  = 1 << 1,
+        NorthBlocked = 1 << 2,
+        SouthBlocked = 1 << 3,
+        Obstacle     = EastBlocked | WestBlocked | NorthBlocked | SouthBlocked
+    };
+
+	using Flags = spk::Flags<Flag>;
+
+    Flags flags;
+
+	Node(Flags p_flags = Flag::None) :
+		flags(p_flags)
+	{
+
+	}
 };
 
 class NodeMap
@@ -38,7 +56,7 @@ public:
 	Chunk();
 
 	void serialize(spk::Message& p_message) const override;
-	void deserialize(spk::Message& p_message) override;
+	void deserialize(const spk::Message& p_message) override;
 	static void skip(spk::Message& p_message);
 
 	void bindActor(spk::SafePointer<Actor> p_actor);

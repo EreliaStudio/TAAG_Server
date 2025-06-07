@@ -46,8 +46,7 @@ void ActorManager::_onUpdateEvent(spk::UpdateEvent& p_event)
 
 	for (const auto& [actorID, actor] : Context::instance()->actorMap.actors())
 	{
-		actor->setPosition(actor->position() + spk::Vector2(0.2f, 0.0f));
-		spk::cout << "New actor [" << actorID << "] position [" << actor->position() << "]" << std::endl;
+		actor->update();
 	}
 
 	_pushActorList();

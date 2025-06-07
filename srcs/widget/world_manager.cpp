@@ -10,6 +10,8 @@ void WorldManager::_sendChunk(const spk::Server::ClientID& p_clientID, const spk
 	{
 		spk::Vector2Int requestedChunkPosition = p_message.get<spk::Vector2Int>();
 
+		awnser << requestedChunkPosition;
+
 		Context::instance()->tilemap.requestChunk(requestedChunkPosition)->serialize(awnser);
 	}
 
@@ -18,13 +20,15 @@ void WorldManager::_sendChunk(const spk::Server::ClientID& p_clientID, const spk
 
 void WorldManager::_loadNodeMap()
 {
-	Context::instance()->nodeMap.addNode(' ', Node{ false }); // Add empty node
-	Context::instance()->nodeMap.addNode('W', Node{ true }); // Add wall node
+	Context::instance()->nodeMap.addNode(0, Node(Node::Flag::None));
+	Context::instance()->nodeMap.addNode(1, Node(Node::Flag::None));
 }
 
 WorldManager::WorldManager(const std::wstring& p_name, spk::SafePointer<spk::Widget> p_parent) :
 	spk::Widget(p_name, p_parent)
 {
+	_loadNodeMap();
+
 	Context::instance()->server.subscribe(MessageType::ChunkRequest, [this](const spk::Server::ClientID& p_clientID, const spk::Message& p_message) {
 		_sendChunk(p_clientID, p_message);
 	}).relinquish();

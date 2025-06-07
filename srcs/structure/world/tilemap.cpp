@@ -8,21 +8,22 @@ void Tilemap::_onChunkGeneration(const ChunkCoordinate& p_coordinates, spk::Safe
 		{
 			for (size_t h = 0; h < Chunk::Size.z; h++)
 			{
-				if (h != 0)
+				p_chunk->setContent(i, j, h, -1);
+
+				if (i == 0 || j == 0)
 				{
-					continue;
+					p_chunk->setContent(i, j, h, 2);
 				}
-
-				char value = (i == 0 || j == 0 ? 'W' : ' ');
-
-				p_chunk->setContent(i, j, h, value);
 			}	
 		}
 	}
+	
+	p_chunk->setContent(3, 3, 1, 0);
+	p_chunk->setContent(6, 6, 1, 1);
 }
 
 Tilemap::Tilemap() :
 	spk::ITilemap<Chunk>()
 {
-	requestChunk({0, 0});
+
 }
