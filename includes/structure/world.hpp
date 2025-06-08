@@ -57,7 +57,7 @@ public:
 
 	void serialize(spk::Message& p_message) const override;
 	void deserialize(const spk::Message& p_message) override;
-	static void skip(spk::Message& p_message);
+	static void skip(const spk::Message& p_message);
 
 	void bindActor(spk::SafePointer<Actor> p_actor);
 	void unbindActor(spk::SafePointer<Actor> p_actor);

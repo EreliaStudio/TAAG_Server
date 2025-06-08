@@ -17,6 +17,11 @@ void Chunk::deserialize(const spk::Message& p_message)
 	p_message.pull(content(), contentByteSize());
 }
 
+void Chunk::skip(const spk::Message& p_message)
+{
+	p_message.skip(contentByteSize());
+}
+
 void Chunk::bindActor(spk::SafePointer<Actor> p_actor)
 {
 	if (p_actor->bindedChunk() != nullptr)
