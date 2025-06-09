@@ -26,10 +26,18 @@ private:
 	spk::Vector2 _scale = spk::Vector2(1, 1);
 	spk::Color _color = spk::Color::white;
 
+	float _moveSpeed = 0.0001; // Unit / milliseconds
+	spk::Vector2 _origin;
+	spk::Vector2 _destination;
+	spk::Timer _motionTimer = spk::Timer(spk::Duration(16u, spk::TimeUnit::Millisecond));
+
 	spk::SafePointer<Chunk> _bindedChunk;
 
 public:
-	void update();
+	void update(const long long& p_elapsedMilliseconds);
+
+	bool isMoving() const;
+	void move(const spk::Vector2& p_direction);
 
 	void setShape(const Shape& p_shape);
 	const Shape& shape() const;
@@ -41,6 +49,9 @@ public:
 	const spk::Vector2& scale() const;
 	void setColor(const spk::Color& p_color);
 	const spk::Color& color() const;
+
+	void setMoveSpeed(float p_moveSpeed);
+	const float& moveSpeed() const;
 
 	void serialize(spk::Message& p_message) const override;
 	void deserialize(const spk::Message& p_message) override;

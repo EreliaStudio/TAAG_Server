@@ -39,19 +39,22 @@ void ActorManager::_pushActorList()
 
 void ActorManager::_onUpdateEvent(spk::UpdateEvent& p_event)
 {
-	if (_pushActorTimer.state() == spk::Timer::State::Running)
+	if (p_event.deltaTime.milliseconds == 0)
 	{
 		return ;
 	}
 
 	for (const auto& [actorID, actor] : Context::instance()->actorMap.actors())
 	{
-		actor->update();
+		actor->update(p_event.deltaTime.milliseconds);
 	}
 
-	_pushActorList();
-	
-	_pushActorTimer.start();
+	if (_pushActorTimer.state() != spk::Timer::State::Running)
+	{
+		_pushActorList();
+		
+		_pushActorTimer.start();
+	}
 }
 
 ActorManager::ActorManager(const std::wstring& p_name, spk::SafePointer<spk::Widget> p_parent) :

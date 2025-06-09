@@ -1,8 +1,23 @@
 #include "structure/actor.hpp"
 
-void Actor::update()
+void Actor::update(const long long& p_elapsedMilliseconds)
 {
+	if (isMoving() == true)
+	{
+		_position = spk::Vector2::lerp(_origin, _destination, _motionTimer.elapsedRatio());
+	}
+}
 
+bool Actor::isMoving() const
+{
+	return (_motionTimer.state() == spk::Timer::State::Running);
+}
+
+void Actor::move(const spk::Vector2& p_direction)
+{
+	_origin = _position;
+	_destination = _origin + p_direction * _moveSpeed;
+	_motionTimer.start();
 }
 
 void Actor::setShape(const Shape& p_shape)
@@ -54,6 +69,16 @@ void Actor::setColor(const spk::Color& p_color)
 const spk::Color& Actor::color() const
 {
 	return (_color);
+}
+
+void Actor::setMoveSpeed(float p_moveSpeed)
+{
+	_moveSpeed = p_moveSpeed;
+}
+
+const float& Actor::moveSpeed() const
+{
+	return (_moveSpeed);
 }
 
 void Actor::serialize(spk::Message& p_message) const

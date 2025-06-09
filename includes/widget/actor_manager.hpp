@@ -5,7 +5,7 @@
 class ActorManager : public spk::Widget
 {
 private:
-	spk::Timer _pushActorTimer = spk::Timer(16_ms);
+	spk::Timer _pushActorTimer = spk::Timer(5_ms);
 
 	void _parseActorRequest(const spk::Server::ClientID& p_clientID, const spk::Message& p_message);
 	void _pushActorList();
